@@ -232,10 +232,25 @@ def messages_destroy(user_id, message_id):
     return redirect(url_for('users_show', user_id=user_id))
 
 
+@app.route(
+    '/users/<int:user_id>/messages/<int:message_id>/like', methods=["GET"])
+@login_required
+def like_message(user_id, message_id):
+
+    liked = Message.query.get(message_id)
+    current_user.liked_messages.append(liked)
+    db.session.add(current_user)
+    db.session.commit()
+    from IPython import embed
+    embed()
+    return redirect(url_for('root'))
+
+
 @app.route('/')
 def root():
     messages = []
     if current_user.is_authenticated:
+
         messages = Message.query.order_by(
             Message.timestamp.desc()).limit(100).all()
     return render_template('home.html', messages=messages)

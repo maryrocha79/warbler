@@ -22,6 +22,13 @@ FollowersFollowee = db.Table(
               db.ForeignKey('users.id', ondelete="cascade")),
     db.CheckConstraint('follower_id != followee_id', name="no_self_follow"))
 
+LikesMessages = db.Table(
+    'user_likes', db.Column('id', db.Integer, primary_key=True),
+    db.Column('user_id', db.Integer,
+              db.ForeignKey('users.id', ondelete="cascade")),
+    db.Column('messages_id', db.Integer,
+              db.ForeignKey('messages.id', ondelete="cascade")))
+
 
 class User(db.Model, UserMixin):
 
@@ -42,6 +49,11 @@ class User(db.Model, UserMixin):
         primaryjoin=(FollowersFollowee.c.follower_id == id),
         secondaryjoin=(FollowersFollowee.c.followee_id == id),
         backref=db.backref('following', lazy='dynamic'),
+        lazy='dynamic')
+    liked_messages = db.relationship(
+        'Message',
+        secondary=LikesMessages,
+        backref=db.backref('user_likes', lazy='dynamic'),
         lazy='dynamic')
 
     def __repr__(self):
