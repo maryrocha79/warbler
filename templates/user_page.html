@@ -57,6 +57,9 @@
     <h4 id="sidebar-username">@{{ user.username }}</h4>
     <p>{{ user.location}}</p>
     <p>{{user.bio}}</p>
+    <p>
+      Likes: {{ user.liked_messages.count() }}
+    </p>
   </div>
   {% block user_details %}
   {% endblock %}

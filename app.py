@@ -251,8 +251,11 @@ def root():
     messages = []
     if current_user.is_authenticated:
 
-        messages = Message.query.order_by(
-            Message.timestamp.desc()).limit(100).all()
+        following_ids = [u.id for u in current_user.following]
+        following_ids.append(current_user.id)
+        messages = Message.query.filter(
+            Message.user_id.in_(following_ids)).order_by(
+                Message.timestamp.desc()).limit(100).all()
     return render_template('home.html', messages=messages)
 
 
