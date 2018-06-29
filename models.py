@@ -27,7 +27,8 @@ LikesMessages = db.Table(
     db.Column('user_id', db.Integer,
               db.ForeignKey('users.id', ondelete="cascade")),
     db.Column('messages_id', db.Integer,
-              db.ForeignKey('messages.id', ondelete="cascade")))
+              db.ForeignKey('messages.id', ondelete="cascade")),
+    db.UniqueConstraint('user_id', 'messages_id', name='uniq'))
 
 
 class User(db.Model, UserMixin):

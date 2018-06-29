@@ -52,7 +52,14 @@
         </div>
         <div>
           <!-- TODO FIX -->
-            <a class='btn btn-outline-primary mr-0' href="{{ url_for('like_message', current_user=current_user,message_id=message.id, user_id=message.user.id)}}?_method=GET">Like</a>
+          {% if message in current_user.liked_messages %}
+          <a class='btn btn-danger mr-0 likebutton' data-userid="{{ message.user.id }}" data-messageid="{{ message.id }}">Unlike</a>
+          <!-- <a class="btn btn-outline-danger mr-0" href="{{ url_for('unlike_message',message_id=message.id, user_id=message.user.id)}}?_method=DELETE">Unlike</a> python version -->
+          {% else %}
+          <a class='btn btn-outline-primary mr-0 likebutton'  data-userid="{{ message.user.id }}" data-messageid="{{ message.id }}">Like</a>
+          {% endif %}
+          
+            
         </div>
       </li>
       {% endfor %}

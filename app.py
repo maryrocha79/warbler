@@ -20,7 +20,7 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/warbler_db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = False
+app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "it's a secret"
@@ -145,7 +145,7 @@ def users_followers(user_id):
 
 @app.route('/users/<int:user_id>', methods=["GET"])
 def users_show(user_id):
-    found_user = User.query.get(user_id)
+    found_user = User.query.get_or_404(user_id)
     return render_template('users/show.html', user=found_user)
 
 
@@ -241,8 +241,19 @@ def like_message(user_id, message_id):
     current_user.liked_messages.append(liked)
     db.session.add(current_user)
     db.session.commit()
-    from IPython import embed
-    embed()
+    return redirect(url_for('root'))
+
+
+@app.route(
+    '/users/<int:user_id>/messages/<int:message_id>/like', methods=["DELETE"])
+@login_required
+def unlike_message(user_id, message_id):
+
+    liked = Message.query.get(message_id)
+    current_user.liked_messages.remove(liked)
+    # db.session.add(current_user)
+    db.session.commit()
+
     return redirect(url_for('root'))
 
 

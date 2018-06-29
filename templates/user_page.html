@@ -27,7 +27,7 @@
           </li>
           <li class="stat">
             <p class="small">Likes</p>
-            <h4>TBD</h4>
+            <h4>{{ user.liked_messages.count() }}</h4>
           </li>
           <div class="ml-auto">
             {% if current_user.id == user.id %}
@@ -57,9 +57,6 @@
     <h4 id="sidebar-username">@{{ user.username }}</h4>
     <p>{{ user.location}}</p>
     <p>{{user.bio}}</p>
-    <p>
-      Likes: {{ user.liked_messages.count() }}
-    </p>
   </div>
   {% block user_details %}
   {% endblock %}

@@ -28,7 +28,6 @@
     rel="shortcut icon"
     href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
-
 {% if request.endpoint == 'users_new' or request.endpoint == 'users_login' %}
   <body class="onboarding">
 {% else %}
@@ -83,5 +82,7 @@
     {% block content %}
     {% endblock %}
   </div>
+  <script type=text/javascript src="{{
+    url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
