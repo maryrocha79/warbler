@@ -54,9 +54,19 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
+    
     <h4 id="sidebar-username">@{{ user.username }}</h4>
-    <p>{{ user.location}}</p>
-    <p>{{user.bio}}</p>
+    <form id="change-username" action="#" style="display: none;">
+        <input id="form-username" type="text" value="{{ user.username}}">
+    </form>
+    <p id="sidebar-bio">{{user.bio}}</p>
+
+    <form id="change-bio" action="#" style="display: none;">
+        <input id="form-bio" type="text" value="{{ user.bio}}">
+    </form>
+
+  
+    <!-- <p>{{ user.location}}</p> -->
   </div>
   {% block user_details %}
   {% endblock %}

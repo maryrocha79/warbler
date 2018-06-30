@@ -1,4 +1,19 @@
 $().ready(function() {
+  $('#sidebar-username').on('click', function(e) {
+    $(e.target).toggle();
+    $('#change-username').toggle();
+  });
+  $('#sidebar-bio').on('click', function(e) {
+    $(e.target).toggle();
+    $('#change-bio').toggle();
+  });
+  $('#change-username').focusout(function() {
+    $('#form-username').val();
+
+    console.log($('#form-username').val());
+    console.log('testing');
+  });
+
   $('.likebutton').on('click', function(e) {
     let userid = e.target.attributes['data-userid'].value;
     let messageid = e.target.attributes['data-messageid'].value;
